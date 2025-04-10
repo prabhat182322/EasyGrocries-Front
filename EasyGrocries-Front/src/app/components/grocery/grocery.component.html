@@ -1,0 +1,54 @@
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price ($)</th>
+    </tr>
+  </thead>
+  <tbody>
+  @if (grocery.length > 0) {
+    @for (item of grocery; track $index) {
+      <tr>
+      <td class="table-cell">{{ item.id }}</td>
+      <td class="table-cell">{{ item.name }}</td>
+      <td class="table-cell">{{ item.description }}</td>
+      <td class="table-cell">{{ item.price }}</td>
+      </tr>
+    }    
+}
+</tbody>
+</table>
+
+<h2>Available Items</h2>
+<div *ngFor="let item of grocery" class="item-card">
+  <h3>{{ item.name }} - ${{ item.price }}</h3>
+  <p>{{ item.description }}</p>
+  <button (click)="addToBasket(item)">Add to Basket</button>
+</div>
+
+<hr>
+<h2>Your Basket</h2>
+  <div *ngFor="let item of basket" class="basket-item">
+  <ul>Item ID: {{ item.groceryItemId }} | Quantity: {{ item.quantity }}</ul>
+  </div>
+
+  <hr />
+
+<h2>Shipping Information</h2>
+<input [(ngModel)]="shippingInfo.name" placeholder="Name" /><br />
+<input [(ngModel)]="shippingInfo.address" placeholder="Address" /><br />
+<label>
+  <input type="checkbox" [(ngModel)]="isLoyaltySelected" /> Apply 20% Loyalty Discount
+</label><br /><br />
+
+<button (click)="placeOrder()">Place Order</button>
+
+<hr>
+
+<div *ngIf="orderResult">
+  <h2>Order Confirmation</h2>
+  <p>Order Number: {{ orderResult.orderNumber }}</p>
+  <p>Total Price: ${{ orderResult.totalPrice }}</p>
+</div>
